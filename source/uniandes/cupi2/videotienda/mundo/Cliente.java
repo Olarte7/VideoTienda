@@ -147,9 +147,13 @@ public class Cliente {
      * @return devolver la copia.
      * @throws Exception si el cliente no tiene la copia alquilada.
      */
-    public Copia buscarPeliculaAlquilada(String pelicula, int codigo)
-    {
-    	
+    public Copia buscarPeliculaAlquilada(String pelicula, int codigo) throws Exception {
+        for (Copia c : darAlquiladas) {
+            if (c.darCodigo() == codigo && c.darTituloPelicula().equals(pelicula)) {
+                return c;
+            }
+        }
+        throw new Exception("El cliente no tiene la copia alquilada"); // No se encontró la copia
     }
     
     /**
@@ -161,12 +165,11 @@ public class Cliente {
      */
     public Copia devolverCopia(String titulo, int numeroCopia) throws Exception {
     	for (Copia c : darAlquiladas) {
-    		if (c.darCodigo() == numeroCopia && c.darTituloPelicula().equals(titulo)) {
-    			darAlquiladas.remove(c);
-    			return c;
-    		}
-    	}
-    	throw new Exception("El cliente no tiene alquilada esa copia.");
+            if (c.darCodigo() == numeroCopia && c.darTituloPelicula().equals(titulo)) {
+                return c;
+            }
+        }
+        throw new Exception("El cliente no tiene alquilada esa copia.");
     }
     
 }
