@@ -107,24 +107,27 @@ public class Cliente {
      * Alquila una copia para el cliente.
      * @param copia Copia a alquilar. copia != null.
      */
-    public void alquilarCopia(Copia copia) {
-    	
+    public void alquilarCopia(Copia copia) 
+    {
+    	darAlquiladas.add(copia);
     }
     
     /**
      * Recarga el saldo del cliente.
      * @param monto Monto que va a recargar. monto > 0.
      */
-    public void cargarSaldo(int monto) {
-    	
+    public void cargarSaldo(int monto) 
+    {
+    	saldo = saldo + monto;
     }
     
     /**
      * Descuenta el saldo del cliente.
      * @param monto Monto que desconta. monto > 0.
      */
-    public void descargarSaldo(int monto) {
-    	
+    public void descargarSaldo(int monto) 
+    {
+    	saldo = saldo - monto;
     }
     
 
@@ -134,7 +137,7 @@ public class Cliente {
      */
     public ArrayList<Copia> darAlquiladas() 
     {
-        
+        return darAlquiladas;
     }
     
     /**
@@ -153,11 +156,17 @@ public class Cliente {
      * devolver la copia que el cliente alquiló
      * @param titulo Titulo de la pelicula
      * @param numeroCopia Número de copia
+     * @return devolver la copia
      * @throws Exception si el cliente no ha alquilado la copia
      */
-    public void devolverCopia(String titulo, int numeroCopia) throws Exception 
-    {
-    	
+    public Copia devolverCopia(String titulo, int numeroCopia) throws Exception {
+    	for (Copia c : darAlquiladas) {
+    		if (c.darCodigo() == numeroCopia && c.darTituloPelicula().equals(titulo)) {
+    			darAlquiladas.remove(c);
+    			return c;
+    		}
+    	}
+    	throw new Exception("El cliente no tiene alquilada esa copia.");
     }
     
 }
