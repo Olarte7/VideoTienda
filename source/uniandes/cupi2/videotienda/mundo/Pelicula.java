@@ -43,7 +43,7 @@ public class Pelicula
     /**
      * N�mero de la siguiente copia a adicionar
      */
-    private int codigoSiguienteCopia;
+    private int codigoSiguienteCopia = 1;
 
     //-----------------------------------------------------------------
     // Constructores
@@ -57,6 +57,10 @@ public class Pelicula
     public Pelicula( String unTitulo )
     {
     	//TODO implementar inicializando los atributos
+    	 titulo = (unTitulo == null) ? "Desconocido" : unTitulo;
+    	 disponibles = new ArrayList<>();
+    	 prestadas = new ArrayList<>();
+    	 codigoSiguienteCopia = disponibles.size() + 1;
     }
 
     //-----------------------------------------------------------------
@@ -71,6 +75,9 @@ public class Pelicula
     public int agregarCopia( )
     {
     	//TODO implementar. Recuerde retornar lo indicado en la documentaci�n. 
+    	Copia copia = new Copia(titulo, codigoSiguienteCopia);
+    	disponibles.add(copia);
+    	return codigoSiguienteCopia++;
     }
 
     /**
@@ -95,7 +102,14 @@ public class Pelicula
      */
     public void devolverCopia( int codigoCopia )
     {
-    	//TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.    	
+    	//TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.
+        prestadas.removeIf(c -> {
+            if (c.darCodigo() == codigoCopia) {
+                disponibles.add(c);
+                return true;
+            }
+            return false;
+        });
     }
 
     /**
