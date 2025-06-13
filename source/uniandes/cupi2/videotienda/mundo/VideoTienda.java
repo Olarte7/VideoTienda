@@ -106,7 +106,7 @@ public class VideoTienda
                 pel = new Pelicula( titulo );
                 for( int j = 1; j <= copias; j++ )
                 {
-                    pel.agregarCopia( );
+                    pel.alquilarCopia( );
                 }
 
                 catalogo.add( pel );
@@ -140,10 +140,13 @@ public class VideoTienda
      * @param cedula C�dula del cliente. cedula != null.
      * @return el cliente correspondiente a la c�dula, o null si no hay un cliente con la c�dula dada.
      */
-    public Cliente buscarCliente( Cliente cedula )
+    public Cliente buscarCliente( String cedula )
     {
     	//TODO implementar
-    	return cedula;
+        for (Cliente c : clientes)
+            if (c.darCedula().equals(cedula))
+                return c;
+        return null;
     }
     
     /**
@@ -171,6 +174,10 @@ public class VideoTienda
     public void cargarSaldoCliente( String cedula, int monto ) throws Exception
     {
     	//TODO implementar
+    	Cliente c = buscarCliente(cedula);
+        if (c == null)
+            throw new Exception("Cliente no encontrado");
+        c.cargarSaldo(monto);
     }
 
     /**
@@ -186,8 +193,17 @@ public class VideoTienda
      */
     public int alquilarPelicula( String titulo, String cedula ) throws Exception
     {
-		return tarifaDiaria;
     	//TODO implementar
+        Cliente cliente = buscarCliente(cedula);
+        Pelicula pelicula = buscarPelicula(titulo);
+
+        if (cliente == null || pelicula == null)
+            throw new Exception("Cliente o película no encontrada");
+
+        Copia copia = pelicula.alquilarCopia();
+        cliente.alquilarCopia(copia);
+
+        return tarifaDiaria;
     }
 
     /**
@@ -202,7 +218,8 @@ public class VideoTienda
     public void devolverCopia( String titulo, int numeroCopia, String cedula ) throws Exception
     {
     	//TODO implementar
-
+        Copia copia = buscarCliente(cedula).devolverCopia(titulo, numeroCopia);
+        buscarPelicula(titulo).agregarCopia(copia);
     }
     
     /**
@@ -211,9 +228,13 @@ public class VideoTienda
      * @param titulo Título de la película. titulo != null
      * @throws Exception si la pelicula no existe
      */
-    public void agregarCopiaPelicula( String titulo )
+    public void agregarCopiaPelicula( String titulo ) throws Exception
     {
     	//TODO implementar
+        Pelicula p = buscarPelicula(titulo);
+        if (p == null)
+            throw new Exception("La película no existe");
+        p.alquilarCopia();
     }
 
     /**
@@ -222,9 +243,11 @@ public class VideoTienda
      *@param nuevaTarifa Nueva tarifa de la copia de la pelicula. nuevaTarifa != null
      *@throws Exception si no hay tarifas existentes
      */
-    public void modificarTarifa ( int nuevaTarifa ) 
+    public void modificarTarifa ( int nuevaTarifa ) throws Exception 
     {
-    	
+        if (tarifaDiaria <= 0)
+            throw new Exception("No hay tarifa actual");
+        tarifaDiaria = nuevaTarifa;
     }
 
 

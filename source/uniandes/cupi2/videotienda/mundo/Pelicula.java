@@ -70,9 +70,10 @@ public class Pelicula
     /**
      * Adiciona una nueva copia de la pel�cula. <br>
      * <b>post: </b>La lista de pel�culas disponibles tiene una nueva copia.
+     * @param copia2 
      * @return c�digo de la copia creada. c�digo >= 1;
      */
-    public int agregarCopia( )
+    public int agregarCopia(Copia copia2 )
     {
     	//TODO implementar. Recuerde retornar lo indicado en la documentaci�n. 
     	Copia copia = new Copia(titulo, codigoSiguienteCopia);
