@@ -78,9 +78,13 @@ public class Pelicula
      * <b>post: </b> la copia queda en la lista de prestadas.
      * @return Copia que ha sido alquilada o null si no hay disponibles.
      */
-    public Copia alquilarCopia( )
-    {
-    	//TODO implementar. Recuerde retornar lo indicado en la documentaci�n.
+    public Copia alquilarCopia() {
+        for (Copia copia : disponibles) {
+            prestadas.add(copia);
+            disponibles.remove(copia);
+            return copia;
+        }
+        return null;
     }
 
     /**
@@ -110,15 +114,15 @@ public class Pelicula
     public int darTotalCopias()
     {
     //TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.
-    	
+    	return disponibles.size() + prestadas.size();
     }
     /**
      * Retorna el n�mero de copias disponibles
      * @return n�mero de copias disponibles
      */
-    public int darNumeroDisponibles()
+    public ArrayList<Copia> darNumeroDisponibles()
     {
     //TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.
-    	
+    	return disponibles;
     }
 }
