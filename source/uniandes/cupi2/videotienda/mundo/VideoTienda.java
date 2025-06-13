@@ -129,6 +129,10 @@ public class VideoTienda
     public void afiliarCliente( String cedula, String nombre, String direccion ) throws Exception
     {
     	//TODO implementar
+    	if (cedula == null || nombre == null || direccion == null) 
+    		throw new Exception("Los datos están incompletos");
+    	
+    	clientes.add(new Cliente(cedula, nombre, direccion));
     }
     
     /**
@@ -147,10 +151,12 @@ public class VideoTienda
      * @param titulo título de la pelicula. pelicula != null
      * @return la pelicula correspondiente al título, o null si no hay una pelicula con el título dado
      */
-    
-    public Pelicula buscarPelicula(String titulo )
+	public Pelicula buscarPelicula(String titulo )
     {
-		return null;
+    	for (Pelicula p : catalogo)
+    		if (p.darTitulo().equals(titulo))
+    			return p;
+    	return null;
     	
     }
 
