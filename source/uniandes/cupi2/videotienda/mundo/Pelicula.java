@@ -135,9 +135,9 @@ public class Pelicula
      * Retorna el n�mero de copias disponibles
      * @return n�mero de copias disponibles
      */
-    public ArrayList<Copia> darNumeroDisponibles()
+    public int darNumeroDisponibles()
     {
     //TODO Definir la signatura del m�todo de acuerdo a la documentaci�n e implementarlo.
-    	return disponibles;
+    	return disponibles.size();
     }
 }
